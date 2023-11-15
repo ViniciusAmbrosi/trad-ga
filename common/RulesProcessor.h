@@ -7,6 +7,7 @@
 #include <iostream>
 #include <algorithm>  // for std::remove_if
 #include <cctype>     // for std::isspace
+#include <cstring>  // for strcmp
 
 
 using namespace std;
@@ -14,6 +15,13 @@ using namespace std;
 class RulesProcessor
 {
     private:
+
+        void trim(const char* s)
+        {
+            string srtingWord(s);
+            trimString(srtingWord);
+        }
+
         void trimString(string &s)
         {
             s.erase(std::remove_if(s.begin(), s.end(), ::isspace), s.end());
@@ -38,9 +46,22 @@ class RulesProcessor
             print("float_num", yytext);
         }
 
-        void relationalOperatorRule()
+        void relationalAndEqualOperatorRule()
         {
-            print("Relational_Op", yytext);
+            string word(yytext);
+            trimString(word);
+            if(!word.compare("="))
+            {
+                print("equal_op", yytext);
+            }
+            else
+            {
+                print("relational_op", yytext);
+            }
+        }
+
+        void logicalOperatorRule(){
+            print("logic_op", yytext);
         }
 };
 #endif
