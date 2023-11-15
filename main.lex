@@ -14,10 +14,14 @@ RulesProcessor rulesProcessor;
 NUMBERS [0-9]+
 FLOAT_NUMBERS [0-9]+[.][0-9]+
 
+RELATIONAL_OP (\ )*(==|>=|<=|=|<|>|!==)(\ )*
+
 %%
 
 {NUMBERS} rulesProcessor.digitRule();
 {FLOAT_NUMBERS} rulesProcessor.floatNumRule();
+
+{RELATIONAL_OP} rulesProcessor.relationalOperatorRule();
 
 %%
 
