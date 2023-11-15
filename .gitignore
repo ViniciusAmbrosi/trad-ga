@@ -1,4 +1,4 @@
 *.out
 *.yy.c
-TextLexicalAnalyzer.cpp
-TextLexicalAnalyzer
+.vscode/
+*.cpp
