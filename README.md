@@ -1,0 +1,2 @@
+# trad-ga
+GA - Tradutores
