@@ -17,6 +17,7 @@ SPECIAL_CHARACTERS (\(|\)|\{|\}|,|;|#|\[|\])
 
 NUMBERS [0-9]+
 FLOAT_NUMBERS [0-9]+[.][0-9]+
+STRINGS (\"[^\n"]+\")|""
 
 RELATIONAL_EQUAL_OP (\ )*(==|>=|<=|=|<|>|!==)(\ )*
 LOGICAL_OP (\ )*(&&|\|\|)(\ )*
@@ -36,8 +37,9 @@ RESERVED_KEYWORD ({PRIMITIVE_TYPES}|{ACCESS_LEVEL_KEYWORDS}|{CLASS_KEYWORDS}|{FL
 {COMMENT_BLOCK}
 {SPECIAL_CHARACTERS} rulesProcessor.specialCharactersRule();
 
-{NUMBERS} rulesProcessor.digitRule();
-{FLOAT_NUMBERS} rulesProcessor.floatNumRule();
+{NUMBERS} rulesProcessor.numberRule();
+{FLOAT_NUMBERS} rulesProcessor.floatNumberRule();
+{STRINGS} rulesProcessor.stringsRule();
 
 {RELATIONAL_EQUAL_OP} rulesProcessor.relationalAndEqualOperatorRule();
 {LOGICAL_OP} rulesProcessor.logicalOperatorRule();

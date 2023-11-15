@@ -29,34 +29,44 @@ class RulesProcessor
                 {"#", "hashtag"}
             };
 
-        void trim(const char* s)
-        {
-            string srtingWord(s);
-            trimString(srtingWord);
-        }
-
         void trimString(string &s)
         {
             s.erase(std::remove_if(s.begin(), s.end(), ::isspace), s.end());
         }
 
-        void print(const char* keyword, const char* word)
+        void removeQuotes(string &s)
+        {
+            s.erase(std::remove_if(s.begin(), s.end(), [](char c) { return c == '"'; }), s.end());
+        }
+
+        void print(const char* keyword, const char* word, bool shouldTrim = true)
         {
             string srtingWord(word);
-            trimString(srtingWord);
+
+            if(shouldTrim)
+            {
+                trimString(srtingWord);
+            }
+                
             printf("[%s, %s]", keyword, srtingWord.c_str());
         }
 
     public:
 
-        void digitRule()
+        void numberRule()
         {
             print("num", yytext);
         }
 
-        void floatNumRule()
+        void floatNumberRule()
         {
             print("float_num", yytext);
+        }
+
+        void stringsRule(){
+            string word(yytext);
+            removeQuotes(word);
+            print("string_literal", word.c_str(), false);
         }
 
         void relationalAndEqualOperatorRule()
