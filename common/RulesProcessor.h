@@ -88,6 +88,11 @@ class RulesProcessor
             print("logic_op", yytext);
         }
 
+        void arithmeticOperatorRule()
+        {
+            print("arithmetic_operator", yytext);
+        }
+
         void reservedKeywordRule()
         {
             print("reserved_word", yytext);
