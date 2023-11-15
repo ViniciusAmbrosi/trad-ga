@@ -60,8 +60,14 @@ class RulesProcessor
             }
         }
 
-        void logicalOperatorRule(){
+        void logicalOperatorRule()
+        {
             print("logic_op", yytext);
+        }
+
+        void reservedKeywordRule()
+        {
+            print("reserved_word", yytext);
         }
 };
 #endif
