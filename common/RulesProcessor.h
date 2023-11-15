@@ -7,14 +7,27 @@
 #include <iostream>
 #include <algorithm>  // for std::remove_if
 #include <cctype>     // for std::isspace
-#include <cstring>  // for strcmp
-
+#include <cstring>    // for strcmp
+#include <map>        // for map
 
 using namespace std;
 
 class RulesProcessor
 {
     private:
+        map<string, string> specialCharacters = 
+            {
+                {"[", "l_bracket"},
+                {"]", "r_bracket"},
+                {"(", "l_paren"},
+                {")", "r_paren"},
+                {"{", "l_curly_bracket"},
+                {"}", "r_curly_bracket"},
+                {",", "comma"},
+                {";", "semicolon"},
+                {"&", "ampersand"},
+                {"#", "hashtag"}
+            };
 
         void trim(const char* s)
         {
@@ -68,6 +81,15 @@ class RulesProcessor
         void reservedKeywordRule()
         {
             print("reserved_word", yytext);
+        }
+
+        void specialCharactersRule()
+        {
+            string character(yytext);
+            trimString(character);
+
+            string identifiedSpecialCharacter = specialCharacters[character];
+            print(&identifiedSpecialCharacter[0], yytext);
         }
 };
 #endif

@@ -13,6 +13,7 @@ RulesProcessor rulesProcessor;
 
 COMMENT ("//".*)
 COMMENT_BLOCK ("/*"[^*/]*"*/")
+SPECIAL_CHARACTERS (\(|\)|\{|\}|,|;|#|\[|\])
 
 NUMBERS [0-9]+
 FLOAT_NUMBERS [0-9]+[.][0-9]+
@@ -33,6 +34,7 @@ RESERVED_KEYWORD ({PRIMITIVE_TYPES}|{ACCESS_LEVEL_KEYWORDS}|{CLASS_KEYWORDS}|{FL
 
 {COMMENT}
 {COMMENT_BLOCK}
+{SPECIAL_CHARACTERS} rulesProcessor.specialCharactersRule();
 
 {NUMBERS} rulesProcessor.digitRule();
 {FLOAT_NUMBERS} rulesProcessor.floatNumRule();
