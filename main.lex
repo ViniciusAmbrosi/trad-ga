@@ -36,6 +36,10 @@ METHODS_KEYWORDS (clrscr|scanf|print|printf|catch|do|else|for|finally|if|switch|
 
 RESERVED_KEYWORD ({PRIMITIVE_TYPES}|{ACCESS_LEVEL_KEYWORDS}|{CLASS_KEYWORDS}|{FLOW_CONTROL_KEYWORDS}|{VARIABLE_KEYWORDS}|{METHODS_KEYWORDS})
 
+SINGLE_SPACE (\ )+
+
+VARIABLE ({PRIMITIVE_TYPES}(\*)?{SINGLE_SPACE}(\*)?(\ )*{ALPHANUMERIC_WORD}(,(\ )*(\*)?(\ )*{ALPHANUMERIC_WORD})*(\ )*;)|{PRIMITIVE_TYPES}(\*)?{SINGLE_SPACE}(\*)?(\ )*{ALPHANUMERIC_WORD}
+METHOD {PRIMITIVE_TYPES}(\*)?{SINGLE_SPACE}(\*)?(\ )*{ALPHANUMERIC_WORD}(\ )*(\()
 
 %%
 
@@ -53,6 +57,9 @@ RESERVED_KEYWORD ({PRIMITIVE_TYPES}|{ACCESS_LEVEL_KEYWORDS}|{CLASS_KEYWORDS}|{FL
 {ARITHMETIC_OP} rulesProcessor.arithmeticOperatorRule();
 
 {RESERVED_KEYWORD} rulesProcessor.reservedKeywordRule();
+
+{VARIABLE} rulesProcessor.variableDeclarationRule();
+{METHOD} rulesProcessor.methodDeclarationRule();
 
 #{IDENTATION}
 
