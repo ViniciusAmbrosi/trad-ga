@@ -59,6 +59,18 @@ class RulesProcessor
             printf("[%s, %s]", keyword, srtingWord.c_str());
         }
 
+        void print(const char* keyword, int id, int subId = 0)
+        {
+            if(subId == 0)
+            {
+                printf("[%s, %d]", keyword, id);
+            }
+            else
+            {
+                printf("[%s, %d.%d]", keyword, id, subId);
+            }
+        }
+
         vector<string> splitString(const char* base, char delimitator, bool log = false)
         {
             vector<string> splittingResult;
@@ -79,6 +91,12 @@ class RulesProcessor
             }
 
             return splittingResult;
+        }
+
+        bool isAlphanumeric(const std::string& str) {
+            return std::all_of(str.begin(), str.end(), [](unsigned char c) {
+                return std::isalnum(c);
+            });
         }
 
     public:
@@ -144,7 +162,7 @@ class RulesProcessor
 
             currentScopeProcessor = new ScopeProcessor(words.at(1).c_str());
             globalScopeProcessor->addMethod(currentScopeProcessor);
-            
+
             print("reserved_word", words.at(0).c_str());
             print("id",to_string(globalScopeProcessor->subIdentifier).c_str());
             print("l_paren","(");
@@ -165,9 +183,10 @@ class RulesProcessor
 
                 trimString(word);
                 removeCharacter(word, ',');
+                removeCharacter(word, ';');
 
                 //garante que * e & sejam processados corretamente
-                if (word.size() == 1) {
+                if (word.size() == 1 && !isAlphanumeric(word)) {
                     string identifiedSpecialCharacter = specialCharacters[word];
                     print(&identifiedSpecialCharacter[0], word.c_str());
                 }
@@ -183,19 +202,29 @@ class RulesProcessor
             }
         }
 
-        void variableLookupRule(){
-            // string word(yytext);
-            // int id = globalScope->find(word);
-            // if (id >= 0) {
-            //     stringcontrol::printKeyword("id", ( to_string(globalScope-> id) + "." +  to_string(id)).c_str());
-            // } else {
-            //     id = currentScope -> find(word);
-            //     if (id >= 0) {
-            //         stringcontrol::printKeyword("id", ( to_string(currentScope-> id) + "." +  to_string(id)).c_str());
-            //     }else{
-            //     printf("%s",yytext);
-            //     }
-            // }
+        void variableAndMethodLookupRule(){
+            string word(yytext);
+
+            int id = globalScopeProcessor->findVariableSubIdentifier(word);
+
+            if (id >= 0) // deu match com escopo de métodos
+            {
+                print("id", id);
+
+            } 
+            else // dar match com variáveis, já que é lido de cima pra baixo
+            {
+                id = currentScopeProcessor->findVariableSubIdentifier(word);
+
+                if (id >= 0) 
+                {
+                    print("id", currentScopeProcessor->scopeIdentifier, id);
+                }
+                else
+                {
+                    print("ERROR", yytext);
+                }
+            }
         }
 };
 #endif

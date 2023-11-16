@@ -36,7 +36,17 @@ class ScopeProcessor
         void addVariable(string name)
         {
             this -> subIdentifier++;
-            scopeProcessors -> push_back(new ScopeProcessor(this -> subIdentifier, name));
+            scopeProcessors -> push_back(new ScopeProcessor(this->subIdentifier, name));
+        }
+
+        int findVariableSubIdentifier(string variableName){
+            for(auto scope : *scopeProcessors)
+            {
+                if(!scope->name.compare(variableName)){
+                    return scope->scopeIdentifier;
+                }
+            }
+            return -1;
         }
 };
 #endif

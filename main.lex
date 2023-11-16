@@ -31,7 +31,7 @@ PRIMITIVE_TYPES (int|byte|boolean|char|long|float|double|short|string|void|enum)
 ACCESS_LEVEL_KEYWORDS (private|protected|public)
 CLASS_KEYWORDS (abstract|class|extends|implements|interface|static|import|package|super|instanceof)
 FLOW_CONTROL_KEYWORDS (break|continue|goto|throw|throws|case|return)
-VARIABLE_KEYWORDS (const|final|default|new|null|this|transient|volatile|true|false)
+VARIABLE_KEYWORDS (const|final|default|new|NULL|this|transient|volatile|true|false)
 METHODS_KEYWORDS (clrscr|scanf|print|printf|catch|do|else|for|finally|if|switch|try|while|getch|include)
 
 RESERVED_KEYWORD ({PRIMITIVE_TYPES}|{ACCESS_LEVEL_KEYWORDS}|{CLASS_KEYWORDS}|{FLOW_CONTROL_KEYWORDS}|{VARIABLE_KEYWORDS}|{METHODS_KEYWORDS})
@@ -61,7 +61,9 @@ METHOD {PRIMITIVE_TYPES}(\*)?{SINGLE_SPACE}(\*)?(\ )*{ALPHANUMERIC_WORD}(\ )*(\(
 {VARIABLE} rulesProcessor.variableDeclarationRule();
 {METHOD} rulesProcessor.methodDeclarationRule();
 
-#{IDENTATION}
+{ALPHANUMERIC_WORD} rulesProcessor.variableAndMethodLookupRule();
+
+{IDENTATION}
 
 %%
 

@@ -2,3 +2,4 @@
 *.yy.c
 .vscode/
 *.cpp
+*.exe
